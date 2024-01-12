@@ -1,0 +1,21 @@
+<div class="card border-0 shadow" style="width: 18rem;">
+    <div class="card-body bg-warning bg-gradient">
+        <h5 class="card-title">{{note.title}}</h5>
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <h6 class="card-subtitle text-body-secondary">{{note.dateEdited | date: 'mediumDate'}} </h6>
+            <div class="d-flex flex-row justify-content-between">
+                @if(!status()) {
+                    <button class="btn btn-link"><i class="fa-solid fa-box text-black" (click)="archivedNote()"></i></button>
+                } @else{
+                    <button class="btn btn-link"><i class="fa-solid fa-arrow-up-from-bracket text-black" (click)="archivedNote()"></i></button>
+                }
+                <!-- <button class="btn btn-link" (click)="openDialog()"><i class="fa-solid fa-pencil text-black"></i></button> -->
+                <button class="btn btn-link" (click)="openModal(note)"><i class="fa-solid fa-pencil text-black"></i></button>
+                <button class="btn btn-link" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + note.id"><i class="fa-solid fa-trash text-black"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modals -->
+<!-- <app-modal-note [idModel]="'editModal' + note.id" [note]="note" (updateEvent)="updateNote($event)"></app-modal-note> -->
+<app-modal-alert [id]="note.id" (eventModal)="deleteNote()"></app-modal-alert>

@@ -1,0 +1,32 @@
+<div class="mx-5 mt-3">
+    @if( !notesStatus() ) {
+        <div class="d-flex flex-row justify-content-center align-items-center flex-wrap gap-3">
+            <h1 class="my-0">My Notes</h1>
+            <button class="btn btn-warning fw-semibold" (click)="openModal(emptyNote)">Create note</button>
+            <button type="button" class="btn btn-link text-decoration-none" (click)="toggleNotesStatus()">Archived notes</button>
+        </div>
+
+        <section class="d-flex flex-row justify-content-center align-items-center flex-wrap gap-3 mt-4">
+            @for( note of notes(); track $index) {
+                @if(!note.archived) {
+                    <app-card [note]="note" [status]="notesStatus" (deleteEvent)="deleteNote($event)" (archivedEvent)="archivedNote(note)" (updateEvent)="updateNote($event)"/>
+                }
+            }
+        </section>
+    } @else {
+        <div class="d-flex flex-row justify-content-center align-items-center flex-wrap gap-3">
+            <h1 class="my-0">Archived notes</h1>
+            <button type="button" class="btn btn-link text-decoration-none" (click)="toggleNotesStatus()"><i class="fa-solid fa-arrow-left"></i> Go back to unarchived notes</button>
+        </div>
+
+        <section class="d-flex flex-row justify-content-center align-items-center flex-wrap gap-3 mt-4">
+            @for( note of notes(); track $index) {
+                @if(note.archived) {
+                    <app-card [note]="note" [status]="notesStatus" (deleteEvent)="deleteNote($event)" (archivedEvent)="archivedNote(note)" (updateEvent)="updateNote($event)"/>
+                }
+            }
+        </section>
+    }
+</div>
+
+<!-- <app-modal-note idModel="createModal" (postEvent)="postNote($event)"></app-modal-note> -->

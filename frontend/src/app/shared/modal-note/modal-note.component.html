@@ -1,0 +1,48 @@
+<div class="modal-header d-flex align-items-center justify-content-center">
+    <h2 class="modal-title my-0">Create/Edit notes</h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+</div>
+<div class="modal-body">
+    <form action="" [formGroup]="form" (ngSubmit)="onSubmit($event)">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="title" formControlName="title" placeholder="">
+            <label for="title">Title</label>
+            @if( form.get('title')?.touched && form.get('title')?.errors?.['required']) {
+                <div class="alert alert-danger p-1 mt-2"> The title is required</div>
+            }
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" id="content" name="content" formControlName="content" style="height: 8rem;" placeholder=""></textarea>
+            <label for="content">Content</label>
+            @if( form.get('content')?.touched && form.get('content')?.errors?.['required']) {
+            <div class="alert alert-danger p-1 mt-2"> The content is required</div>
+            }
+        </div>
+        <div class="form-floating mb-3">
+            <div class="container form-floating mb-3 border rounded p-2">
+                
+                <div class="scroll-container" style="min-height: 7rem; max-height: 25rem; overflow-y: auto;"> 
+                    <label for="">Categories</label>
+                    @for (category of categories.controls; track $index;) {
+                        <div class=" mx-3">
+                            <a class="btn btn-secondary btn-sm btn-block py-0 my-1">{{ category.value }}<button type="button" class="btn btn-secondary btn-sm float-right" (click)="removeCategory($index)">X</button></a>
+                        </div>
+                    }
+                </div>
+            </div>
+            @if( form.get('categories')?.touched && form.get('categories')?.errors?.['required']) {
+                <div class="alert alert-danger p-1 mt-2"> The categories is required</div>
+                }
+        </div>
+        <div class=" d-flex justify-content-center align-items-center form-floating mb-3 gap-3">
+            <input class="form-control" type="text"  id="newCategory" formControlName="newCategory" placeholder="">
+            <label for="newCategory">New category</label>
+            <a class="btn btn-outline-warning" (click)="addCategory()">Add</a>
+        </div>
+
+        <div class="modal-footer px-0">
+            <a type="button" class="btn btn-secondary" (click)="closeModal()">Close</a>
+            <button type="submit" class="btn btn-warning fw-semibold mx-0">Save</button>
+        </div>
+    </form>
+</div>
